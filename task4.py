@@ -1,4 +1,10 @@
 def my_func(x, y):
+    """
+    Возвращает результат возведеия числа x в степень y
+    :param x: int
+    :param y: int
+    :return: float
+    """
     try:
         if x <= 0 or y >= 0 or not y % 1 == 0:
             print('Некорректные входные данные')
@@ -10,6 +16,12 @@ def my_func(x, y):
 
 
 def my_func_2(x, y):
+    """
+    Возвращает результат возведеия числа x в степень y
+    :param x: int
+    :param y: int
+    :return: float
+    """
     try:
         if x <= 0 or y >= 0 or not y % 1 == 0:
             print('Некорректные входные данные')

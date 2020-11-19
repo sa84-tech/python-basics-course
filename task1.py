@@ -1,4 +1,9 @@
 def get_division_result(args):
+    """
+    Возвращает результат деления двух чисел
+    :param args: list
+    :return: float
+    """
     try:
         res = float(args[0]) / float(args[1])
     except ZeroDivisionError:
