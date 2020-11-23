@@ -25,6 +25,3 @@ print('\nКонтроль: 0!', fact_rec(0))
 
 for el in fact(0):
     print(el, end=' ')
-
-
-
