@@ -3,14 +3,13 @@ import time
 
 
 class TrafficLight:
-    __color = ''
+    __colors = {'Red': [7, '\033[31m'], 'Yellow': [2, '\033[33m'], 'Green': [10, '\033[32m']}
 
     def running(self):
-        colors = {'red': 7, 'yellow': 2, 'green': 10}
-        for el in cycle(colors.keys()):
-            TrafficLight.__color = el
-            print(TrafficLight.__color)
-            time.sleep(colors.get(el))
+        for color_key in cycle(TrafficLight.__colors.keys()):
+            for t in range((color_value := TrafficLight.__colors.get(color_key))[0], 0, -1):
+                print('', end=f'\r{color_value[1]} {color_key} ({t})')
+                time.sleep(1)
 
 
 tl = TrafficLight()
