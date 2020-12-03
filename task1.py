@@ -11,26 +11,27 @@ class Matrix:
         return m_string
 
     def __add__(self, other):
-        other = Matrix(other)
-        print(other)
-        m_res = []
-        row = []
+        result = []
         for m in range(len(self.matrix)):
-
+            row = []
             for n in range(len(self.matrix[0])):
-                row.append(self.matrix[m][n] + other[m][n])
-                if len(row) == len(self.matrix):
-                    m_res.append(row)
-                    row = []
-        return Matrix(m_res)
+                row.append(self.matrix[m][n] + other.matrix[m][n])
+            result.append(row)
+        return Matrix(result)
 
 
-matrix1 = Matrix([[1, 2, 3],
-                 [4, 5, 6],
-                 [7, 8, 9]])
+matrix1 = Matrix([[12, 23, 34], [45, 56, 67], [78, 89, 99]])
 
-matrix2 = Matrix([[9, 8, 7], [6, 5, 4], [3, 2, 1]])
+matrix2 = Matrix([[99, 88, 77], [66, 55, 44], [33, 22, 12]])
 
-print(matrix1)
-print(matrix2)
-print(matrix1 + matrix2)
+print(f'matrix1:\n{matrix1}')
+print(f'matrix2:\n{matrix2}')
+print(f'matrix1 + matrix2:\n{matrix1 + matrix2}')
+
+matrix1 = Matrix([[1, -2, 3], [4, 5, -6]])
+
+matrix2 = Matrix([[9, -8, 7], [6, 5, -4]])
+
+print(f'matrix1:\n{matrix1}')
+print(f'matrix2:\n{matrix2}')
+print(f'matrix1 + matrix2:\n{matrix1 + matrix2}')
