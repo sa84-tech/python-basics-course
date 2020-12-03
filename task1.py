@@ -8,9 +8,10 @@ class TrafficLight:
     def running(self):
         for color_key in cycle(TrafficLight.__colors.keys()):
             for t in range((color_value := TrafficLight.__colors.get(color_key))[0], 0, -1):
-                print('', end=f'\r{color_value[1]} {color_key} ({t})')
+                print(f'\r{color_value[1]} {color_key} ({t})', end='')
                 time.sleep(1)
 
 
 tl = TrafficLight()
 tl.running()
+git
