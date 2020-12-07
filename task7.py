@@ -16,7 +16,9 @@ class Complex:
 
 x = Complex(1, 2)
 y = Complex(2, 4)
-print(x.num, y.num)
+print(f'x = {x.num}, y = {y.num}')
 
-print((x + y).num)
-print((x * y).num)
+print('x + y =', (x + y).num)
+print('x * y =', (x * y).num)
+print('y * x =', (y * x).num)
+print('x * y + y * x =', (x * y + y * x).num)

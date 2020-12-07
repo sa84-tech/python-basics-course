@@ -11,7 +11,7 @@ class IsNumberError(Exception):
         return True
 
 
-total = []
+final_list = []
 proceed = True
 
 while proceed:
@@ -20,11 +20,11 @@ while proceed:
         break
     try:
         if IsNumberError.validate(answer):
-            total.append(float(answer))
+            final_list.append(float(answer))
         else:
-            raise IsNumberError('Только числа')
+            raise IsNumberError('Только числа.')
     except IsNumberError as err:
         print(err)
 
 
-print('Итоговый список:\n', total)
+print('Итоговый список:\n', final_list)
