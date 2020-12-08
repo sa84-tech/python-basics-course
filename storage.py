@@ -26,7 +26,23 @@ class Storage:
 
         return f'\nСклад: {self.storage_name}, ' \
                f'Дата: {datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")}\n' + \
-               'Список оборудования, которое хранится на складе:\n' + str(table)
+               'Остатки:\n' + str(table)
+
+    def __getstate__(self) -> dict:  # Как мы будем "сохранять" класс
+        state = {}
+        state["storage_name"] = self.storage_name
+        state["__journal"] = self.__journal
+        state["__stored_equipment"] = self.__stored_equipment
+        state["__delivered_equipment"] = self.__delivered_equipment
+        state["__qtty_info"] = self.__qtty_info
+        return state
+
+    def __setstate__(self, state: dict):  # Как мы будем восстанавливать класс из байтов
+        self.storage_name = state["storage_name"]
+        self.__journal = state["__journal"]
+        self.__stored_equipment = state["__stored_equipment"]
+        self.__delivered_equipment = state["__delivered_equipment"]
+        self.__qtty_info = state["__qtty_info"]
 
     def eq_validate(self, equipment):
         try:
@@ -94,7 +110,7 @@ class Storage:
             for i, key in enumerate(self.__qtty_info.keys(), 1):
                 table.add_row([i, key, self.__qtty_info.get(key)])
 
-            print(f'\nОтчет - Количество оборудования:\nСклад: {self.storage_name}, '
+            print(f'\nОтчет - Оборудование.\nСклад: {self.storage_name}, '
                   f'Дата: {datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")}\n'
                   f'{str(table)}\nОбщее количество оборудования: {len(self.__stored_equipment)}')
 
@@ -113,7 +129,7 @@ class Storage:
                 for i, key in enumerate(di.keys(), 1):
                     table.add_row([i, key, di.get(key)])
 
-            print(f'\nОтчет - Список оргтехники на складе ({span}):\nСклад: {self.storage_name}, '
+            print(f'\nОтчет - Анализ запасов ({span}):\nСклад: {self.storage_name}, '
                   f'Дата: {datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")}\n{str(table)}')
 
         elif report_type == 'delivered_equipment_report':
@@ -123,7 +139,7 @@ class Storage:
                 table.add_row([i, el.get("equipment").eq_type, el.get("equipment").name,
                                el.get('storage'), el.get("delivered_date").strftime("%d.%m.%Y %H:%M:%S")])
 
-            print(f'\nОтчет - Список отгруженной оргтехники.\nСклад: {self.storage_name}, '
+            print(f'\nОтчет - Отгрузка Товара.\nСклад: {self.storage_name}, '
                   f'Дата: {datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")}\n{str(table)}')
 
         elif report_type == 'movement_report':
@@ -137,7 +153,7 @@ class Storage:
                  for i, sj in enumerate(self.__journal, 1)]
             )
 
-            print(f'\nОтчет - Перемещение оборудования:\nСклад: {self.storage_name}, '
+            print(f'\nОтчет - Движение ТМЦ:\nСклад: {self.storage_name}, '
                   f'Дата: {datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")}\n'
                   f'{str(table)}')
 
