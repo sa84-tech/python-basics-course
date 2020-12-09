@@ -61,8 +61,35 @@ class Storage:
                 return False
         return False
 
+    def get_equipment_by_sn(self, eq_sn):
+        print(eq_sn)
+        for item in self.__stored_equipment:
+            # print(item)
+            if eq_sn == item.get('equipment').sn:
+                return item.get('equipment')
+
+    def get_equipments_by_name(self):
+        pass
+
+    def get_equipments_by_type(self):
+        pass
+
     def get_equipment_qtty(self, eq):
         return len([e.get('equipment').name for e in self.__stored_equipment if e.get('equipment').name == eq.name])
+
+    def get_equipments_list(self, eq_type='', eq_name='', eq_sn='', full=False):
+        n = 0
+        if full:
+            return [[n := n + 1, (e := se.get('equipment')).eq_type, e.name, e.sn] for se in self.__stored_equipment
+                    if (not eq_type or eq_type == se.get('equipment').eq_type) and (not eq_name) and (not eq_sn)]
+        else:
+            d = [e.get('equipment').name for e in self.__stored_equipment]
+            # print(d)
+            # di = [{e.get('equipment').name: e.get('equipment').eq_type} for e in self.__stored_equipment]
+            # print(di)
+            dic = Counter(d)
+            # print(dic)
+            return [[i, key, dic.get(key)] for i, key in enumerate(dic.keys(), 1)]
 
     def take_equipment(self, *equipment):
         err_count = 0
@@ -103,7 +130,12 @@ class Storage:
         else:
             return 'Ошибка: На складе отсутствует оборудование в указанном количесте.'
 
-    def display_report(self, report_type, detailed=False):
+    def display_equipments_list(self, eq_type='', eq_name='', eq_sn=''):
+        table = PrettyTable(['№ п/п', 'Тип', 'Наименоваие', 'Серийный номер'])
+        table.add_rows(self.get_equipments_list(eq_type, eq_name, eq_sn, full=True))
+        print(table)
+
+    def display_report(self, report_type, full=False):
         if report_type == 'qtty_report':
             table = PrettyTable(['№ п/п', 'Тип', 'Количество'])
 
@@ -117,7 +149,7 @@ class Storage:
         elif report_type == 'storage_report':
             span = 'Общий'
 
-            if detailed:
+            if full:
                 span = 'Подробный'
                 table = PrettyTable(['№ п/п', 'Тип', 'Наименование', 'Серийный номер', 'Дата Поступления'])
                 for i, el in enumerate(self.__stored_equipment, 1):
