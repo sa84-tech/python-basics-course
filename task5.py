@@ -6,6 +6,8 @@ from storage import Storage
 
 
 storage = Storage('Центральный')
+print(storage)
+
 print('\nПриемка товара, 10 единиц техники...')
 ans = storage.take_equipment(
     printer1 := Printer('  kyocera Ecosys P3060dn', uuid.uuid1()),

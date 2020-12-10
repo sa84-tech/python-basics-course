@@ -85,7 +85,9 @@ class Storage:
         if full:
             return [[n := n + 1, (e := se.get('equipment')).eq_type, e.name, se.get('receipt_date'), e.sn]
                     for se in self.__stored_equipment
-                    if (not eq_type or eq_type == se.get('equipment').eq_type) and (not eq_name) and (not eq_sn)]
+                    if (not eq_sn or eq_sn == se.get('equipment').sn)
+                    and (not eq_name or eq_name == se.get('equipment').name)
+                    and (not eq_type or eq_type == se.get('equipment').eq_type)]
         else:
             dit = Counter([tuple([e.get('equipment').name, e.get('equipment').eq_type])
                            for e in self.__stored_equipment])
